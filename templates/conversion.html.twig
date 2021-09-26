@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Convert file</h1>
+    {{ form_start(form) }}
+        Please upload csv or json file to convert.
+        {{ form_rest(form) }}
+        <button class="btn btn-success" type="submit">Convert</button>
+    {{ form_end(form) }}
+{% endblock %}

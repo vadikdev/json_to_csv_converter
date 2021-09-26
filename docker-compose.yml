@@ -1,0 +1,49 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.6"
+
+volumes:
+  composer_cache:
+    external: true
+
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: test-case-webserver
+    hostname: test-case-webserver
+    working_dir: /app
+    environment:
+      PHP_IDE_CONFIG: "serverName=test-case"
+    volumes:
+      - ./:/app
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker/nginx/cert/server.crt:/etc/nginx/cert/server.crt
+      - ./.docker/nginx/cert/server.key:/etc/nginx/cert/server.key
+    depends_on:
+      - php
+    ports:
+      - "8005:80"
+  php:
+    image: vadiktok/php8.0-fpm
+    container_name: test-case-php
+    hostname: test-case-php
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
+      - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/cli/conf.d/99-overrides.ini
+      - ./.docker/php-fpm/bin/php-xdebug:/bin/php-xdebug
+
+  php-compose:
+    image: vadiktok/php8.0-fpm
+    container_name: test-case-composer
+    working_dir: /app
+    environment:
+      COMPOSER_HOME: /composer
+    volumes:
+      - ./:/app
+      - composer_cache:/composer/cache
+    entrypoint: composer install
+    depends_on:
+      - php

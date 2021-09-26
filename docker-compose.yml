@@ -23,7 +23,7 @@ services:
     depends_on:
       - php
     ports:
-      - "8005:80"
+      - "8000:80"
   php:
     image: vadiktok/php8.0-fpm
     container_name: test-case-php

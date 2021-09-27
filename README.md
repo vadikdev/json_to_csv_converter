@@ -1,8 +1,11 @@
 # File Converter
 
 Simple file converter to convert data between different formats while saving data structure.
+
 Currently supports converting json to cvs and vise versa.
-RUn application and open homepage to use converter.
+
+Run an application and open homepage to use converter.
+
 Will allow you to upload csv or json file and will respond with converted file.
 
 ## Dependencies
